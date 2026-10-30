@@ -1,0 +1,25 @@
+{
+  "name": "building-blocks",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable runtime schemas and inferred TypeScript types",
+  "type": "module",
+  "exports": {
+    "./content-schema": {
+      "types": "./dist/content-schema.d.ts",
+      "import": "./dist/content-schema.js",
+      "default": "./dist/content-schema.js"
+    }
+  },
+  "files": ["dist"],
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.test.json",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm run build && npm run typecheck && npm test",
+    "check:dist": "npm run build && git diff --exit-code -- dist"
+  },
+  "dependencies": {"zod": "4.6.7"},
+  "devDependencies": {"typescript": "5.9.3"}
+}
