@@ -80,3 +80,23 @@ Future modules should add explicit subpath exports; this is not a workspace or U
 
 No project license has been selected. Public visibility is not a license grant.
 Third-party dependencies retain their own licenses.
+
+## Locale publication policy
+
+The additive `building-blocks/locale-publication` export provides `publicationPolicySchema`,
+`localeRouteSchema`, `publicationPathSchema`, and `createLocalePublicationSchema(allowedLocales)`.
+The factory takes the application's explicit locale allowlist and validates a strict object
+whose `resources` map generic resource IDs to locale entries. Each entry requires `path`,
+`publication` (`published` or `draft`) and `search` (`index` or `noindex`). Draft requires noindex.
+Paths must be canonical lower-case absolute ASCII page paths ending in `/`, and cannot collide
+across resources or locales. No optional defaults, coercion or unknown keys are accepted.
+An absent locale remains absent; it is never filled in or published. The package contains no
+site-specific locale list, resource IDs, slugs or content. Inferred types are exported as
+`PublicationPolicy`, `LocaleRoute` and `LocalePublication`.
+
+Validation alone does not restrict access. Consumers must enforce drafts in server/client
+routing, content/query APIs and static output, and derive links, robots, sitemap and hreflang
+from their one validated policy source. A published-noindex page remains accessible by URL.
+This extension leaves `building-blocks/content-schema` unchanged, including independent
+editorial `noindex` metadata. Install an exact reviewed work-branch commit; this is not a main
+merge or an npm release.
