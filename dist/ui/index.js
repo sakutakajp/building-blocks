@@ -8,11 +8,11 @@ const messages = (id, description, error) => [
     description ? h('p', { id: `${id}-description`, class: 'bb-field__description' }, description) : null,
     error ? h('p', { id: `${id}-error`, class: 'bb-field__error', role: 'alert' }, error) : null,
 ];
-export const BbTheme = defineComponent({
+export const BbTheme = /* #__PURE__ */ defineComponent({
     name: 'BbTheme', props: { theme: { type: String, default: 'glassmorphism' } },
     setup: (props, { slots }) => () => h('div', { class: 'bb-theme', 'data-bb-theme': props.theme }, slots.default?.()),
 });
-export const BbButton = defineComponent({
+export const BbButton = /* #__PURE__ */ defineComponent({
     name: 'BbButton', inheritAttrs: false,
     props: {
         variant: { type: String, default: 'primary' },
@@ -25,7 +25,7 @@ export const BbButton = defineComponent({
         type: props.type, disabled: props.disabled || props.loading, 'aria-busy': props.loading || undefined,
     }), [props.loading ? h('span', { class: 'bb-button__spinner', 'aria-hidden': 'true' }) : null, slots.default?.()]),
 });
-export const BbTextField = defineComponent({
+export const BbTextField = /* #__PURE__ */ (() => defineComponent({
     name: 'BbTextField', inheritAttrs: false,
     props: { ...fieldProps, modelValue: { type: String, default: '' }, type: { type: String, default: 'text' } },
     emits: { 'update:modelValue': (_value) => true },
@@ -43,8 +43,8 @@ export const BbTextField = defineComponent({
             ]);
         };
     },
-});
-export const BbSelect = defineComponent({
+}))();
+export const BbSelect = /* #__PURE__ */ (() => defineComponent({
     name: 'BbSelect', inheritAttrs: false,
     props: { ...fieldProps, modelValue: { type: String, default: '' }, placeholder: String,
         options: { type: Array, default: () => [] } },
@@ -65,8 +65,8 @@ export const BbSelect = defineComponent({
             ]);
         };
     },
-});
-export const BbCard = defineComponent({
+}))();
+export const BbCard = /* #__PURE__ */ defineComponent({
     name: 'BbCard', props: { title: String, description: String },
     setup: (props, { slots }) => () => h('section', { class: 'bb-card' }, [
         slots.header || props.title || props.description ? h('header', { class: 'bb-card__header' }, slots.header?.() ?? [
@@ -77,11 +77,11 @@ export const BbCard = defineComponent({
         slots.footer ? h('footer', { class: 'bb-card__footer' }, slots.footer()) : null,
     ]),
 });
-export const BbBadge = defineComponent({
+export const BbBadge = /* #__PURE__ */ defineComponent({
     name: 'BbBadge', props: { variant: { type: String, default: 'neutral' } },
     setup: (props, { slots }) => () => h('span', { class: ['bb-badge', `bb-badge--${props.variant}`] }, slots.default?.()),
 });
-export const BbTabs = defineComponent({
+export const BbTabs = /* #__PURE__ */ defineComponent({
     name: 'BbTabs',
     props: { modelValue: { type: String, required: true }, tabs: { type: Array, required: true },
         label: { type: String, default: 'Tabs' } },
@@ -126,7 +126,7 @@ export const BbTabs = defineComponent({
         ]);
     },
 });
-export const BbSelectionGroup = defineComponent({
+export const BbSelectionGroup = /* #__PURE__ */ (() => defineComponent({
     name: 'BbSelectionGroup', inheritAttrs: false,
     props: { ...fieldProps, name: String,
         modelValue: { type: [String, Array], default: () => [] },
@@ -161,8 +161,8 @@ export const BbSelectionGroup = defineComponent({
                 ])), ...messages(id, props.description, props.error),]);
         };
     },
-});
-export const BbDialog = defineComponent({
+}))();
+export const BbDialog = /* #__PURE__ */ defineComponent({
     name: 'BbDialog', inheritAttrs: false,
     props: { open: Boolean, title: { type: String, required: true }, description: String,
         closeLabel: { type: String, default: 'Close dialog' } },

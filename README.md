@@ -74,7 +74,7 @@ npm run check:dist
 negative compile tests, and runs runtime tests through the public subpath export.
 `check:dist` fails when rebuilding changes tracked distribution files. Commit
 source and generated `dist/` together. Tests contain only synthetic examples.
-Future modules should add explicit subpath exports; this is not a workspace or UI package.
+Future modules should add explicit subpath exports; schemas and UI remain independent entry points.
 
 ## Licensing
 
@@ -100,8 +100,7 @@ from their one validated policy source. A published-noindex page remains accessi
 Tool and Index frontmatter optionally accept `localePublication`, validated by
 `publicationPolicySchema`. Existing content remains valid without it; Blog and Partial contracts
 and independent editorial `noindex` remain unchanged. Applications may require the field for
-their managed pages and prohibit duplicated `noindex` in those pages. Install an exact reviewed work-branch commit; this is not a main
-merge or an npm release.
+their managed pages and prohibit duplicated `noindex` in those pages. Install an exact reviewed commit. This is not an npm-registry release.
 
 ## Themeable Vue UI
 
@@ -120,6 +119,7 @@ can tree-shake unused UI exports. UI is SSR-safe and has no top-level DOM access
 import { BbTheme, BbButton } from 'building-blocks/ui';
 import 'building-blocks/themes/base.css';
 import 'building-blocks/themes/memphis.css';
+const start = () => { /* application action */ };
 </script>
 <template>
   <BbTheme theme="memphis">
