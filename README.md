@@ -97,6 +97,8 @@ site-specific locale list, resource IDs, slugs or content. Inferred types are ex
 Validation alone does not restrict access. Consumers must enforce drafts in server/client
 routing, content/query APIs and static output, and derive links, robots, sitemap and hreflang
 from their one validated policy source. A published-noindex page remains accessible by URL.
-This extension leaves `building-blocks/content-schema` unchanged, including independent
-editorial `noindex` metadata. Install an exact reviewed work-branch commit; this is not a main
+Tool and Index frontmatter optionally accept `localePublication`, validated by
+`publicationPolicySchema`. Existing content remains valid without it; Blog and Partial contracts
+and independent editorial `noindex` remain unchanged. Applications may require the field for
+their managed pages and prohibit duplicated `noindex` in those pages. Install an exact reviewed work-branch commit; this is not a main
 merge or an npm release.

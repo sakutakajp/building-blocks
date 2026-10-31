@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { publicationPolicySchema } from './locale-publication.js';
 
 /** A real Gregorian calendar date, preserved as YYYY/MM/DD (years 0001–9999). */
 export const calendarDateSchema = z.string().refine((value) => {
@@ -49,6 +50,7 @@ export const blogSchema = z.strictObject({
 const { tag: _tag, ...pageOptionalFields } = optionalFields;
 
 export const toolSchema = z.strictObject({
+  localePublication: publicationPolicySchema.optional(),
   ...pageOptionalFields,
   slug: fields.slug,
   category: fields.category,
@@ -61,6 +63,7 @@ export const toolSchema = z.strictObject({
 });
 
 export const indexSchema = z.strictObject({
+  localePublication: publicationPolicySchema.optional(),
   ...pageOptionalFields,
   title: fields.title,
   description: fields.description,

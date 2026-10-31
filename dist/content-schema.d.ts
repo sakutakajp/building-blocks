@@ -33,6 +33,16 @@ export declare const toolSchema: z.ZodObject<{
     homepage: z.ZodOptional<z.ZodBoolean>;
     showCover: z.ZodOptional<z.ZodBoolean>;
     noindex: z.ZodOptional<z.ZodBoolean>;
+    localePublication: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        publication: z.ZodLiteral<"published">;
+        search: z.ZodEnum<{
+            index: "index";
+            noindex: "noindex";
+        }>;
+    }, z.core.$strict>, z.ZodObject<{
+        publication: z.ZodLiteral<"draft">;
+        search: z.ZodLiteral<"noindex">;
+    }, z.core.$strict>], "publication">>;
 }, z.core.$strict>;
 export declare const indexSchema: z.ZodObject<{
     title: z.ZodString;
@@ -47,6 +57,16 @@ export declare const indexSchema: z.ZodObject<{
     homepage: z.ZodOptional<z.ZodBoolean>;
     showCover: z.ZodOptional<z.ZodBoolean>;
     noindex: z.ZodOptional<z.ZodBoolean>;
+    localePublication: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        publication: z.ZodLiteral<"published">;
+        search: z.ZodEnum<{
+            index: "index";
+            noindex: "noindex";
+        }>;
+    }, z.core.$strict>, z.ZodObject<{
+        publication: z.ZodLiteral<"draft">;
+        search: z.ZodLiteral<"noindex">;
+    }, z.core.$strict>], "publication">>;
 }, z.core.$strict>;
 /** Body-only partials are represented by {}; metadata fields remain optional. */
 export declare const partialSchema: z.ZodObject<{
@@ -86,6 +106,16 @@ export declare const contentSchemas: {
         homepage: z.ZodOptional<z.ZodBoolean>;
         showCover: z.ZodOptional<z.ZodBoolean>;
         noindex: z.ZodOptional<z.ZodBoolean>;
+        localePublication: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            publication: z.ZodLiteral<"published">;
+            search: z.ZodEnum<{
+                index: "index";
+                noindex: "noindex";
+            }>;
+        }, z.core.$strict>, z.ZodObject<{
+            publication: z.ZodLiteral<"draft">;
+            search: z.ZodLiteral<"noindex">;
+        }, z.core.$strict>], "publication">>;
     }, z.core.$strict>;
     readonly index: z.ZodObject<{
         title: z.ZodString;
@@ -100,6 +130,16 @@ export declare const contentSchemas: {
         homepage: z.ZodOptional<z.ZodBoolean>;
         showCover: z.ZodOptional<z.ZodBoolean>;
         noindex: z.ZodOptional<z.ZodBoolean>;
+        localePublication: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            publication: z.ZodLiteral<"published">;
+            search: z.ZodEnum<{
+                index: "index";
+                noindex: "noindex";
+            }>;
+        }, z.core.$strict>, z.ZodObject<{
+            publication: z.ZodLiteral<"draft">;
+            search: z.ZodLiteral<"noindex">;
+        }, z.core.$strict>], "publication">>;
     }, z.core.$strict>;
     readonly partial: z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;

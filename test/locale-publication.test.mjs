@@ -44,3 +44,14 @@ test('JSON own __proto__ keys are rejected instead of silently discarded', () =>
     '{"resources":{"example":{"en":{"path":"/en/","publication":"published","search":"index","__proto__":{}}}}}',
   ]) assert.equal(schema.safeParse(JSON.parse(json)).success, false, json);
 });
+
+test('optional Tool/Index policy is strict and does not change editorial contracts', async () => {
+  const { toolSchema, indexSchema, blogSchema, partialSchema } = await import('../dist/content-schema.js');
+  const page = { title: 'Example', description: 'Example description', cover: '/cover.png', alt: '' };
+  assert.equal(indexSchema.safeParse(page).success, true);
+  assert.equal(indexSchema.safeParse({ ...page, localePublication: { publication: 'draft', search: 'noindex' } }).success, true);
+  assert.equal(indexSchema.safeParse({ ...page, localePublication: { publication: 'draft', search: 'index' } }).success, false);
+  assert.equal(toolSchema.shape.localePublication.safeParse(null).success, false);
+  assert.equal('localePublication' in blogSchema.shape, false);
+  assert.equal('localePublication' in partialSchema.shape, false);
+});
