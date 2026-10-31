@@ -1,0 +1,74 @@
+{
+  "name": "building-blocks",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable content schemas and themeable Vue UI components",
+  "type": "module",
+  "exports": {
+    "./content-schema": {
+      "types": "./dist/content-schema.d.ts",
+      "import": "./dist/content-schema.js",
+      "default": "./dist/content-schema.js"
+    },
+    "./locale-publication": {
+      "types": "./dist/locale-publication.d.ts",
+      "import": "./dist/locale-publication.js",
+      "default": "./dist/locale-publication.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui/index.js"
+    },
+    "./themes/base.css": "./themes/base.css",
+    "./themes/glassmorphism.css": "./themes/glassmorphism.css",
+    "./themes/memphis.css": "./themes/memphis.css",
+    "./themes/cyberpunk.css": "./themes/cyberpunk.css"
+  },
+  "files": [
+    "dist",
+    "themes"
+  ],
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.test.json && tsc -p tsconfig.storybook.json",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm run build && npm run typecheck && npm test && npm run test:ui",
+    "check:dist": "npm run build && git diff --exit-code -- dist",
+    "test:ui": "vitest run",
+    "storybook": "storybook dev -p 6006 --disable-telemetry",
+    "build-storybook": "storybook build --disable-telemetry",
+    "lint": "node scripts/lint.mjs"
+  },
+  "dependencies": {
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.1",
+    "@playwright/test": "1.64.1",
+    "@storybook/addon-a11y": "10.6.5",
+    "@storybook/vue3-vite": "10.6.5",
+    "@types/node": "^24.19.2",
+    "@vue/test-utils": "2.4.6",
+    "esbuild": "0.28.2",
+    "jsdom": "27.4.0",
+    "storybook": "10.6.5",
+    "typescript": "5.9.3",
+    "vite": "7.3.7",
+    "vitest": "5.0.5",
+    "vue": "3.5.44"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
+  }
+}

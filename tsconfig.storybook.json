@@ -1,0 +1,1 @@
+{"extends":"./tsconfig.json","compilerOptions":{"noEmit":true,"rootDir":".","module":"ESNext","moduleResolution":"Bundler","skipLibCheck":true,"types":["node"]},"include":["stories/**/*.ts",".storybook/**/*.ts"]}
