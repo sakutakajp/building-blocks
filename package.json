@@ -22,7 +22,12 @@
     "./themes/base.css": "./themes/base.css",
     "./themes/glassmorphism.css": "./themes/glassmorphism.css",
     "./themes/memphis.css": "./themes/memphis.css",
-    "./themes/cyberpunk.css": "./themes/cyberpunk.css"
+    "./themes/cyberpunk.css": "./themes/cyberpunk.css",
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js",
+      "default": "./dist/auth.js"
+    }
   },
   "files": [
     "dist",
