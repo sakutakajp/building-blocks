@@ -1,2 +1,8 @@
 node_modules/
 *.tgz
+
+storybook-static/
+coverage/
+artifacts/
+
+.openai/

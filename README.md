@@ -1,6 +1,6 @@
 # building-blocks
 
-Small, framework-independent building blocks in one root package. The first module
+Content schemas and optional themeable Vue UI in one root package. The first module
 is `building-blocks/content-schema`: strict runtime validation and inferred
 TypeScript types for **raw, already-parsed frontmatter**.
 
@@ -15,7 +15,7 @@ npm install 'git+https://github.com/sakutakajp/building-blocks.git#<FULL_COMMIT_
 This is not an npm-registry release. `private: true` prevents accidental registry
 publication. Compiled ESM JavaScript and declarations are committed in `dist/`;
 there are no install/prepare lifecycle scripts and consumers do not need a compiler.
-Node.js 22+ is supported. Pin your application's lockfile as well.
+Node.js 22.22.3+, 24.15.0+ or 26+ is supported. Pin your application's lockfile as well.
 
 ```ts
 import { blogSchema, type Blog } from 'building-blocks/content-schema';
@@ -102,3 +102,67 @@ Tool and Index frontmatter optionally accept `localePublication`, validated by
 and independent editorial `noindex` remain unchanged. Applications may require the field for
 their managed pages and prohibit duplicated `noindex` in those pages. Install an exact reviewed work-branch commit; this is not a main
 merge or an npm release.
+
+## Themeable Vue UI
+
+The optional `building-blocks/ui` entry exports `BbTheme`, `BbButton`, `BbTextField`,
+`BbCard`, `BbTabs`, `BbSelectionGroup`, `BbSelect`, `BbBadge` and `BbDialog`.
+UI consumers install Vue 3.5 or later. Schema-only consumers do not need Vue:
+it is an optional peer and is never imported by the schema entry points.
+
+Import the structural CSS and only the themes you use. No fonts, images or network
+requests are bundled with themes. Storybook is a development dependency, not an
+application dependency. `sideEffects` preserves explicitly imported CSS; bundlers
+can tree-shake unused UI exports. UI is SSR-safe and has no top-level DOM access.
+
+```vue
+<script setup lang="ts">
+import { BbTheme, BbButton } from 'building-blocks/ui';
+import 'building-blocks/themes/base.css';
+import 'building-blocks/themes/memphis.css';
+</script>
+<template>
+  <BbTheme theme="memphis">
+    <BbButton @click="start">Start</BbButton>
+  </BbTheme>
+</template>
+```
+
+Available themes: `glassmorphism`, `memphis`, `cyberpunk`. `BbTheme` boundaries can
+be nested. Theme variables are locally scoped, so a light form can sit inside a
+dark page. Blur is limited to surfaces; controls remain solid and readable.
+There are no animations, remote fonts or mandatory global theme imports.
+
+### Component contracts
+
+- Button: `variant` primary/secondary/danger/ghost; `size` sm/md/lg; disabled/loading; defaults to type button.
+- Text field / Select: `v-model`, required `label`, optional description/error/disabled/required. Supply `options` as `{value,label,disabled?}` to Select.
+- Card: title/description and header/default/footer slots.
+- Tabs: string `v-model`, `tabs` as `{value,label,disabled?}`, `label`; panels via `#panel-VALUE`. Arrow/Home/End navigation skips disabled tabs.
+- Selection group: `type` checkbox/radio/switch, label and options. Radio uses string `v-model`; checkbox and switch use string arrays. `required` means at least one enabled option for checkbox/switch.
+- Badge: neutral/success/warning/danger, with text in default slot. Convey meaning with words, not color alone.
+- Dialog: `v-model:open`, required title, optional description, default/footer slots. Uses native dialog modal behavior and Escape; focus returns to the trigger. Keep it inside BbTheme. Native `<dialog>` support is required.
+
+Storybook contains 24 component/theme stories plus three full galleries with
+working inputs, tabs and dialogs. Example content is fictional and never submitted.
+
+### Development and publishing
+
+```sh
+npm ci --ignore-scripts
+npm run check
+npm run lint
+npm run build-storybook
+```
+
+`npm run storybook` starts the local catalog. GitHub Pages publishes only
+`storybook-static/` after checks pass on main. Enable repository Settings → Pages →
+Source → GitHub Actions. The workflow uses GitHub's short-lived deployment token;
+no personal token or npm publishing credential is required. It has read-only
+repository access, with Pages write and OIDC permissions limited to the deploy job.
+Deployment is public: never add credentials, customer data or private source content
+to stories. PR builds test the catalog but do not deploy. No external analytics.
+
+Public repository visibility does not grant an open-source license. This change
+preserves the repository's existing licensing status rather than selecting a license
+on the owner's behalf.
